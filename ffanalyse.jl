@@ -3,16 +3,19 @@ import JSON
 using Dates
 using Plots
 
+# using gr backend, because plotly svg output seems to be broken
+gr()
+
 const logpath = "collected-data"
 const outpath = "plots"
-const df = DateFormat("YYYY-mm-dd HH:MM")
+const dateformat = DateFormat("YYYY-mm-dd HH:MM")
 
 # reads log data from the specified file
 function readfile(file)
   data = Dict()
   for line in eachline(file)
     linedata = JSON.parse(line)
-    date = DateTime(linedata["date"], df)
+    date = DateTime(linedata["date"], dateformat)
     userstats = linedata["user_stats"]
     data[date] = userstats
   end
@@ -40,9 +43,20 @@ end
 
 function plotnetstats(data)
   summeddata = sort(collect(users_summed(data)), by = x -> x[1])
-  plot(map(x->x[1], summeddata), map(x->x[2], summeddata), linewidth=2, title="Test")
+  
+  xvals = map(x->x[1], summeddata)
+  yvals = map(x->x[2], summeddata)
+  
+  plot(xvals, yvals, color = :green, label=["Nutzer/Stunde"], title="Gesamtnutzer im Ulmer Freifunknetz")
+  
+  xlabel!("Datum")
+  ylabel!("Nutzer")
+  
+  outfile = outpath * "/stats-gesamt.svg"
+  savefig(outfile)
 end
 
+# filters out all data not collected by the specified host
 function filterbyhost(data, host)
   husers = Dict()
   for (date, userdata) in data
@@ -58,7 +72,7 @@ function plotjuhastats(data)
   xvals = map(x->x[1], juhadata)
   yvals = map(x->x[2], juhadata)
   
-  scatter(xvals, yvals, title="JuHa Blaubeuren Freifunk Daten", label=["Nutzer/Stunde"], m=(:heat, 0.8, Plots.stroke(1, :red)))
+  scatter(xvals, yvals, title="JuHa Blaubeuren Freifunk Daten", label=["Nutzer/Stunde"], m=(:heat, 0.8, Plots.stroke(1, :green)))
   
   xlabel!("Datum")
   ylabel!("Nutzer")
@@ -67,4 +81,9 @@ function plotjuhastats(data)
   savefig(outfile)
 end
 
-gr()
+# reads data and generates plots
+function plotall()
+  data = readfflogs(logpath)
+  plotjuhastats(data)
+  plotnetstats(data)
+end
