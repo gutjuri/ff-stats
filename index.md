@@ -16,7 +16,7 @@ Wie Prometheus, der in der griechischen Legende das Feuer vom Olymp zu den Mensc
 
 ### Einige Beobachtungen:
 
-- Größere Veranstaltungen stechen deutlich hervor. Beispiele sind eine Abiparty, die am 09.11.18 stattgefunden hat oder das "Boneyard Dog" Konzert am 04.01.19. Welches Event Mitte/Ende August stattfand, ist mir nicht bekannt. Der Peak, der in diesem Zeitraum zu erkennen ist, stammt vom 21.07.18, einem Dienstag. Sehr rätselhaft.
+- Größere Veranstaltungen stechen deutlich hervor. Beispiele sind Abiparties, die am 20.07.18 beziehungsweise am 09.11.18 stattgefunden haben oder das "Boneyard Dog" Konzert am 04.01.19. 
 - Auch die LAN-Party, die gegen Ende des Jahres 2018 stattgefunden hat, ist deutlich erkennbar. Hier ergab sich kein hoher Peak, sondern ein Zeitraum von einigen Tagen, in denen immer mehrere Personen mit dem Freifunk Netzwerk verbunden waren.
 - Es scheint, als sei der Freifunk Router gegen Ende November für einige Tage ausgefallen.
 
