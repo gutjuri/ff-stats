@@ -1,6 +1,6 @@
 # Statistiken zum Ulmer Freifunk Netz
 
-Allerdings nur über Nutzerzahlen. Daten werden täglich aktualisiert. Quelle: API des Freifunk Ulm Netzes
+Allerdings nur über Nutzerzahlen. Quelle: API des Freifunk Ulm Netzes
 
 ## Nutzung des Ulmer Freifunknetzes
 
