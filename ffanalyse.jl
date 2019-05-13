@@ -2,6 +2,7 @@ import JSON
 
 using Dates
 using Plots
+using Statistics
 
 # using gr backend, because plotly svg output seems to be broken
 gr()
@@ -12,7 +13,7 @@ const dateformat = DateFormat("YYYY-mm-dd HH:MM")
 
 # reads log data from the specified file
 function readfile(file)
-  data = Dict()
+  data = Dict{DateTime, Dict{String, Int64}}()
   for line in eachline(file)
     linedata = JSON.parse(line)
     date = DateTime(linedata["date"], dateformat)
@@ -24,7 +25,7 @@ end
 
 # reads all .log files in the logfolder
 function readfflogs(logfolder)
-  data = Dict()
+  data = Dict{DateTime, Dict{String, Int64}}()
   for logfile in filter(fname -> endswith(fname, ".log"), readdir(logfolder))
     open(logfolder * "/" * logfile) do file
       merge!(data, readfile(file))
@@ -34,7 +35,7 @@ function readfflogs(logfolder)
 end
 
 function users_summed(data)
-  summedusers = Dict()
+  summedusers = Dict{DateTime, Int64}()
   for (date, userdata) in data
     summedusers[date] = sum(values(userdata))
   end
@@ -47,6 +48,8 @@ function plotnetstats(data)
   xvals = map(x->x[1], summeddata)
   yvals = map(x->x[2], summeddata)
   
+  meandata = [(Date k, v) for k, v in summeddata] |> @groupby(Date(first(_))) |> (x -> map())
+  
   plot(xvals, yvals, color = :green, label=["Nutzer/Stunde"], title="Gesamtnutzer im Ulmer Freifunknetz")
   
   xlabel!("Datum")
@@ -58,7 +61,7 @@ end
 
 # filters out all data not collected by the specified host
 function filterbyhost(data, host)
-  husers = Dict()
+  husers = Dict{DateTime, Int64}()
   for (date, userdata) in data
     husers[date] = userdata[host]
   end
