@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# docker build -t ffanalyse .
+
+docker run --rm -t \
+    -v "$(pwd)":/app \
+    --name ffanalyse \
+    --user $(id -u):$(id -g) \
+    ffanalyse ruby ffanalyse.rb
