@@ -19,9 +19,9 @@ def make_date_labels graph
     graph.disable_significant_rounding_x_axis = true
     graph.use_vertical_x_labels = true
     #graph.enable_vertical_line_markers = true
-    graph.marker_x_count = 50 # One label every 2 days
+    graph.marker_x_count = 10 # One label every 2 days
     graph.x_axis_label_format = lambda do |value|
-      DateTime.strptime(value.to_i.to_s,'%s').strftime('%d.%m.%Y')
+      DateTime.strptime(value.to_i.to_s,'%s').strftime('%b %Y')
     end
    # graph.y_axis_increment = 1
 end
@@ -53,6 +53,8 @@ juha_graph.hide_legend = true
 juha_graph.marker_font_size = 10
 #juha_graph.stroke_width = 0.01
 make_date_labels(juha_graph)
+juha_graph.maximum_value = 50
+juha_graph.minimum_value = 0.0
 juha_graph.write('plots/stats-juha-new.png')
 
 
