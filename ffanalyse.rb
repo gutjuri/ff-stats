@@ -91,14 +91,17 @@ end
 
 puts('Starting network plot')
 summed_data_max = alldata.sum_transform_by { |vs| vs.max_by  { |v| v[1] }[1] }
+summed_data_min = alldata.sum_transform_by { |vs| vs.min_by  { |v| v[1] }[1] }
 
 # puts summed_data
 summed_graph = Gruff::Line.new('1500x750')
 summed_graph.title = 'Nutzerzahlen Gesamtnetz'
-summed_graph.dataxy('Maximale tägliche Nutzer', summed_data_max.keys, summed_data_max.values)
+summed_graph.dataxy('Maximale gleichzeitige Nutzer', summed_data_max.keys, summed_data_max.values)
+summed_graph.dataxy('Minimale gleichzeitige Nutzer', summed_data_min.keys, summed_data_min.values)
 summed_graph.layout_graph
 summed_graph.labels = summed_data_max.keys.map { |s| [s, DateTime.strptime(s.to_i.to_s,'%s').strftime('%b %Y')] }.uniq { |_, dl| dl }.to_h
 #summed_graph.maximum_value = 50
 summed_graph.minimum_value = 0.0
+summed_graph.y_axis_increment = 50
 summed_graph.write('plots/stats-gesamt-new.png')
 puts('Wrote network plot')
